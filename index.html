@@ -16,22 +16,59 @@
 </head>
 
 <body>
-    <div id="leftMenu">
-        メニュー
-    </div>
-    <div id="homePage">
-        ホーム
-    </div>
-    <div id="searchPage">
-        検索
-    </div>
-    <div id="notificationPage">
-        通知
-    </div>
-    <div id="profilePage">
-        プロフィール
-    </div>
-    <div id="settingsPage">
-        設定
+
+<div id="container">
+
+    <!-- ヘッダー -->
+    <div id="header">
+        んだっす（秋田弁SNS）
     </div>
 
+    <!-- 左メニュー -->
+    <div id="leftMenu">
+        <button onclick="showPage('homePage')">ホーム</button>
+        <button onclick="showPage('searchPage')">検索</button>
+        <button onclick="showPage('notificationPage')">通知</button>
+        <button onclick="showPage('profilePage')">プロフィール</button>
+        <button onclick="showPage('settingsPage')">設定</button>
+    </div>
+
+    <!-- メイン -->
+    <div id="main">
+
+        <!-- ホーム（SNSの中心） -->
+        <div id="homePage" class="page">
+
+            <h2>ホーム</h2>
+
+            <!-- 投稿入力 -->
+            <textarea id="postInput" placeholder="なんか書いてけ"></textarea>
+            <button onclick="addPost()">投稿</button>
+
+            <!-- 投稿一覧 -->
+            <div id="posts"></div>
+
+        </div>
+
+        <!-- 他ページ -->
+        <div id="searchPage" class="page" style="display:none;">
+            <h2>検索</h2>
+        </div>
+
+        <div id="notificationPage" class="page" style="display:none;">
+            <h2>通知</h2>
+        </div>
+
+        <div id="profilePage" class="page" style="display:none;">
+            <h2>プロフィール</h2>
+        </div>
+
+        <div id="settingsPage" class="page" style="display:none;">
+            <h2>設定</h2>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
