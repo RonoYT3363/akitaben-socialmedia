@@ -45,6 +45,7 @@ body {
 
 /* ヘッダー（Xの上バーっぽく） */
 #header {
+    display: none;
     padding: 15px;
     font-weight: bold;
     border-bottom: 1px solid #333;
