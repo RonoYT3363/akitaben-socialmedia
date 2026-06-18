@@ -66,6 +66,43 @@
     </div>
 
 </div>
+    
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    query,
+    orderBy,
+    onSnapshot,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBrvljWUiy1qW1FpGi37Md0j7c73ZVvPfE",
+    authDomain: "akitaben-socialmedia.firebaseapp.com",
+    projectId: "akitaben-socialmedia",
+    storageBucket: "akitaben-socialmedia.firebasestorage.app",
+    messagingSenderId: "1042795276573",
+    appId: "1:1042795276573:web:e9f4c18963fd5adfd099f4",
+    measurementId: "G-S0HJBMED77"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.db = db;
+window.firestoreFunctions = {
+    collection,
+    addDoc,
+    query,
+    orderBy,
+    onSnapshot,
+    serverTimestamp
+};
+
+</script>
 </body>
 </html>
