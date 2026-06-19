@@ -42,6 +42,16 @@ window.addEventListener("load", () => {
 
             posts.appendChild(post);
 
+            // Enterキーで投稿
+document.getElementById("postInput").addEventListener("keydown", (e) => {
+    // Shift + Enter は改行として扱う
+    if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        addPost();
+    }
+});
+
+
         });
 
     });
