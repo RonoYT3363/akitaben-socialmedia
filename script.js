@@ -3,66 +3,81 @@
 // ================================
 function formatRelativeTime(date) {
     const now = new Date();
-    const diff = (now - date) / 1000; // 秒差
+    const diff = (now - date) / 1000;
 
-    if (diff <= 5) {
-        return "たった今";
-    }
-
-    if (diff < 60) {
-        return Math.floor(diff) + "秒前";
-    }
+    if (diff <= 5) return "たった今";
+    if (diff < 60) return Math.floor(diff) + "秒前";
 
     const minutes = diff / 60;
-    if (minutes < 60) {
-        return Math.floor(minutes) + "分前";
-    }
+    if (minutes < 60) return Math.floor(minutes) + "分前";
 
     const hours = minutes / 60;
-    if (hours < 24) {
-        return Math.floor(hours) + "時間前";
-    }
+    if (hours < 24) return Math.floor(hours) + "時間前";
 
     const days = hours / 24;
-    if (days < 30) {
-        return Math.floor(days) + "日前";
-    }
+    if (days < 30) return Math.floor(days) + "日前";
 
     const months = days / 30;
-    if (months < 12) {
-        return Math.floor(months) + "か月前";
-    }
+    if (months < 12) return Math.floor(months) + "か月前";
 
     const years = months / 12;
     return Math.floor(years) + "年前";
 }
 
 // ================================
-// 投稿処理（空白投稿禁止 + 投稿後クリア）
+// 画像アップロード（Storage）
+// ================================
+async function uploadImage(file) {
+    return new Promise(async (resolve, reject) => {
+        if (!file) return resolve(null); // 画像なし投稿OK
+
+        const storageRef = storageFunctions.ref(storage, "images/" + Date.now() + "_" + file.name);
+
+        try {
+            await storageFunctions.uploadBytes(storageRef, file);
+            const url = await storageFunctions.getDownloadURL(storageRef);
+            resolve(url);
+        } catch (e) {
+            console.error("画像アップロードエラー:", e);
+            reject(e);
+        }
+    });
+}
+
+// ================================
+// 投稿処理（文章だけ・画像だけ・両方OK）
 // ================================
 async function addPost() {
     const input = document.getElementById("postInput");
-    const text = input.value;
+    const fileInput = document.getElementById("imageInput");
 
-    // 空白・改行だけの投稿を禁止
-    if (!text || text.trim().length === 0) {
-        alert("投稿内容を入力してください");
+    const text = input.value.trim();
+    const file = fileInput.files[0];
+
+    // 文章も画像もない → 投稿不可
+    if (text.length === 0 && !file) {
+        alert("文章または画像を入力してください");
         return;
     }
 
     try {
+        let imageUrl = null;
+
+        if (file) {
+            imageUrl = await uploadImage(file);
+        }
+
         await firestoreFunctions.addDoc(
             firestoreFunctions.collection(db, "posts"),
             {
-                text: text.trim(),
+                text: text.length > 0 ? text : null,
+                imageUrl: imageUrl,
                 createdAt: firestoreFunctions.serverTimestamp()
             }
         );
 
-        // 投稿後に入力欄をクリア
         input.value = "";
-
-        // 投稿後にフォーカスを戻す
+        fileInput.value = "";
         input.focus();
 
     } catch (e) {
@@ -101,8 +116,20 @@ window.addEventListener("load", () => {
             const post = document.createElement("div");
             post.className = "post";
 
-            const text = document.createElement("p");
-            text.textContent = data.text;
+            // テキストがある場合のみ表示
+            if (data.text) {
+                const text = document.createElement("p");
+                text.textContent = data.text;
+                post.appendChild(text);
+            }
+
+            // 画像がある場合は表示
+            if (data.imageUrl) {
+                const img = document.createElement("img");
+                img.src = data.imageUrl;
+                img.className = "postImage";
+                post.appendChild(img);
+            }
 
             const time = document.createElement("span");
             time.className = "time";
@@ -114,9 +141,7 @@ window.addEventListener("load", () => {
                 time.textContent = "送信中…";
             }
 
-            post.appendChild(text);
             post.appendChild(time);
-
             posts.appendChild(post);
         });
     });
