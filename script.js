@@ -27,6 +27,17 @@ function formatRelativeTime(date) {
 // ================================
 // 画像アップロード（Storage）
 // ================================
+document.addEventListener("DOMContentLoaded", () => {
+    const imageButton = document.getElementById("imageButton");
+    const imageInput = document.getElementById("imageInput");
+
+    if (imageButton && imageInput) {
+        imageButton.addEventListener("click", () => {
+            imageInput.click();
+        });
+    }
+});
+
 async function uploadImage(file) {
     return new Promise(async (resolve, reject) => {
         if (!file) return resolve(null); // 画像なし投稿OK
