@@ -27,32 +27,18 @@ function formatRelativeTime(date) {
 // ================================
 // 画像アップロード（Storage）
 // ================================
-document.addEventListener("DOMContentLoaded", () => {
-    const imageButton = document.getElementById("imageButton");
-    const imageInput = document.getElementById("imageInput");
-
-    if (imageButton && imageInput) {
-        imageButton.addEventListener("click", () => {
-            imageInput.click();
-        });
-    }
-});
-
 async function uploadImage(file) {
-    return new Promise(async (resolve, reject) => {
-        if (!file) return resolve(null); // 画像なし投稿OK
+    if (!file) return null;
 
-        const storageRef = storageFunctions.ref(storage, "images/" + Date.now() + "_" + file.name);
+    const storageRef = storageFunctions.ref(
+        storage,
+        "images/" + Date.now() + "_" + file.name
+    );
 
-        try {
-            await storageFunctions.uploadBytes(storageRef, file);
-            const url = await storageFunctions.getDownloadURL(storageRef);
-            resolve(url);
-        } catch (e) {
-            console.error("画像アップロードエラー:", e);
-            reject(e);
-        }
-    });
+    await storageFunctions.uploadBytes(storageRef, file);
+    const url = await storageFunctions.getDownloadURL(storageRef);
+
+    return url;
 }
 
 // ================================
@@ -65,45 +51,40 @@ async function addPost() {
     const text = input.value.trim();
     const file = fileInput.files[0];
 
-    // 文章も画像もない → 投稿不可
-    if (text.length === 0 && !file) {
+    if (!text && !file) {
         alert("文章または画像を入力してください");
         return;
     }
 
-    try {
-        let imageUrl = null;
-
-        if (file) {
-            imageUrl = await uploadImage(file);
-        }
-
-        await firestoreFunctions.addDoc(
-            firestoreFunctions.collection(db, "posts"),
-            {
-                text: text.length > 0 ? text : null,
-                imageUrl: imageUrl,
-                createdAt: firestoreFunctions.serverTimestamp()
-            }
-        );
-
-        input.value = "";
-        fileInput.value = "";
-        input.focus();
-
-    } catch (e) {
-        console.error("投稿エラー:", e);
-        alert("投稿に失敗しました");
+    let imageUrl = null;
+    if (file) {
+        imageUrl = await uploadImage(file);
     }
+
+    await firestoreFunctions.addDoc(
+        firestoreFunctions.collection(db, "posts"),
+        {
+            text: text || null,
+            imageUrl: imageUrl || null,
+            createdAt: firestoreFunctions.serverTimestamp()
+        }
+    );
+
+    input.value = "";
+    fileInput.value = "";
 }
 
 // ================================
-// Enterキーで投稿（Shift+Enter は改行）
+// 写真ボタン → input を開く
 // ================================
-document.getElementById("postInput").addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        addPost();
+document.addEventListener("DOMContentLoaded", () => {
+    const imageButton = document.getElementById("imageButton");
+    const imageInput = document.getElementById("imageInput");
+
+    if (imageButton && imageInput) {
+        imageButton.addEventListener("click", () => {
+            imageInput.click();
+        });
     }
 });
 
@@ -127,14 +108,12 @@ window.addEventListener("load", () => {
             const post = document.createElement("div");
             post.className = "post";
 
-            // テキストがある場合のみ表示
             if (data.text) {
                 const text = document.createElement("p");
                 text.textContent = data.text;
                 post.appendChild(text);
             }
 
-            // 画像がある場合は表示
             if (data.imageUrl) {
                 const img = document.createElement("img");
                 img.src = data.imageUrl;
