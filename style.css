@@ -144,3 +144,12 @@ body {
     align-items: center;
     gap: 6px;
 }
+/* ================================
+　写真用スペース
+================================ */
+.postImage {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
