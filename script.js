@@ -74,6 +74,9 @@ async function addPost() {
     fileInput.value = "";
 }
 
+// HTML から addPost() を呼べるようにする
+window.addPost = addPost;
+
 // ================================
 // 写真ボタン → input を開く
 // ================================
@@ -133,23 +136,22 @@ window.addEventListener("load", () => {
 
             post.appendChild(time);
             posts.appendChild(post);
-            
+        });
+    });
+});
+
 // ================================
 // Enterキーで投稿
 // ================================
-document.getElementById("postInput").addEventListener("keydown", (e) => {
-    // Shift + Enter は改行
-    if (e.key === "Enter" && e.shiftKey) {
-        return;
-    }
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("postInput");
 
-    // Enter単体で投稿
-    if (e.key === "Enter") {
-        e.preventDefault(); // 改行を防ぐ
-        addPost();
-    }
-});
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && e.shiftKey) return;
 
-        });
+        if (e.key === "Enter") {
+            e.preventDefault();
+            addPost();
+        }
     });
 });
