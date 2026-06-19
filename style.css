@@ -1,11 +1,8 @@
-/* ================================
-   基本設定
-================================ */
 body {
     margin: 0;
     font-family: sans-serif;
-    background: #000;
-    color: #fff;
+    background-color: #111;
+    color: white;
 }
 
 #container {
@@ -13,143 +10,65 @@ body {
     height: 100vh;
 }
 
-/* ================================
-   左メニュー（X風）
-================================ */
 #leftMenu {
-    width: 220px;
-    border-right: 1px solid #333;
-    padding: 10px;
+    width: 180px;
+    background-color: #222;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 #leftMenu button {
-    width: 100%;
-    padding: 12px;
-    margin: 5px 0;
-    background: transparent;
-    border: none;
+    padding: 10px;
+    background-color: #333;
     color: white;
-    text-align: left;
-    font-size: 16px;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
-    border-radius: 8px;
-    transition: background 0.2s;
 }
 
-#leftMenu button:hover {
-    background: #111;
-}
-
-/* ================================
-   メインエリア
-================================ */
 #main {
     flex: 1;
-    max-width: 600px;
-    margin: 0 auto;
-    border-right: 1px solid #333;
-    border-left: 1px solid #333;
+    padding: 20px;
+    overflow-y: auto;
 }
 
-/* 上部ヘッダー（必要なら表示） */
-#header {
-    display: none;
-    padding: 15px;
-    font-weight: bold;
-    border-bottom: 1px solid #333;
-}
-
-/* ================================
-   投稿入力エリア
-================================ */
-#postInput {
+textarea {
     width: 100%;
     height: 80px;
-    background: #000;
-    color: white;
-    border: 1px solid #333;
     padding: 10px;
-    box-sizing: border-box;
-    resize: none;
-    font-size: 15px;
-}
-
-/* ================================
-   投稿一覧（X風）
-================================ */
-.post {
-    padding: 14px;
-    border-bottom: 1px solid #222;
-    transition: background 0.2s;
-}
-
-.post:hover {
-    background: #111;
-}
-
-.post p {
-    margin: 0;
-    font-size: 15px;
-    line-height: 1.5;
-}
-
-.post .time {
-    display: block;
-    margin-top: 6px;
-    font-size: 12px;
-    color: #777;
-}
-
-/* ================================
-   右下固定の投稿ボタン（X風）
-================================ */
-#postButton {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #1d9bf0;
-    color: white;
+    border-radius: 8px;
     border: none;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    font-size: 26px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-    z-index: 999;
-}
-
-#postButton:hover {
-    background: #1a8cd8;
-    transform: scale(1.07);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.5);
-}
-
-#postButton:active {
-    transform: scale(0.95);
+    resize: none;
 }
 
 .imageButton {
-    background-color: #222;
+    background-color: #444;
     color: white;
-    border: 1px solid #444;
+    border: none;
     padding: 8px 14px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
     margin-top: 8px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
 }
-/* ================================
-　写真用スペース
-================================ */
+
+.post {
+    background-color: #222;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
 .postImage {
     width: 100%;
     border-radius: 10px;
     margin-top: 10px;
 }
 
+.time {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #aaa;
+}
