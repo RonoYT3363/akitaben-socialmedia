@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="ja">
 
 <head>
     <meta charset="UTF-8">
-
     <title>んだっす dev0.1.0</title>
 
-    <!-- アイコン未決定 -->
     <link rel="icon" href="TBD.png">
-
     <link rel="stylesheet" href="style.css">
 
     <script src="script.js" defer></script>
@@ -18,7 +14,6 @@
 <body>
 
 <div id="container">
-
 
     <!-- 左メニュー -->
     <div id="leftMenu">
@@ -39,6 +34,14 @@
 
             <!-- 投稿入力 -->
             <textarea id="postInput" placeholder="Put your texts here..."></textarea>
+
+            <!-- 画像アップロード（非表示） -->
+            <input type="file" id="imageInput" accept="image/*" style="display:none;">
+
+            <!-- 写真ボタン -->
+            <button id="imageButton" class="imageButton">📷 写真</button>
+
+            <!-- 投稿ボタン -->
             <button onclick="addPost()">投稿</button>
 
             <!-- 投稿一覧 -->
@@ -66,7 +69,8 @@
     </div>
 
 </div>
-    
+
+<!-- Firebase -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
@@ -80,11 +84,18 @@ import {
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyBrvljWUiy1qW1FpGi37Md0j7c73ZVvPfE",
     authDomain: "akitaben-socialmedia.firebaseapp.com",
     projectId: "akitaben-socialmedia",
-    storageBucket: "akitaben-socialmedia.firebasestorage.app",
+    storageBucket: "akitaben-socialmedia.appspot.com",
     messagingSenderId: "1042795276573",
     appId: "1:1042795276573:web:e9f4c18963fd5adfd099f4",
     measurementId: "G-S0HJBMED77"
@@ -92,8 +103,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 window.db = db;
+window.storage = storage;
+
 window.firestoreFunctions = {
     collection,
     addDoc,
@@ -103,6 +117,13 @@ window.firestoreFunctions = {
     serverTimestamp
 };
 
+window.storageFunctions = {
+    ref,
+    uploadBytes,
+    getDownloadURL
+};
+
 </script>
+
 </body>
 </html>
