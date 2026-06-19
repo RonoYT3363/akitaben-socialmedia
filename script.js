@@ -133,6 +133,23 @@ window.addEventListener("load", () => {
 
             post.appendChild(time);
             posts.appendChild(post);
+            
+// ================================
+// Enterキーで投稿
+// ================================
+document.getElementById("postInput").addEventListener("keydown", (e) => {
+    // Shift + Enter は改行
+    if (e.key === "Enter" && e.shiftKey) {
+        return;
+    }
+
+    // Enter単体で投稿
+    if (e.key === "Enter") {
+        e.preventDefault(); // 改行を防ぐ
+        addPost();
+    }
+});
+
         });
     });
 });
