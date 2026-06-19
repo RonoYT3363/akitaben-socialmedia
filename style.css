@@ -130,3 +130,17 @@ body {
 #postButton:active {
     transform: scale(0.95);
 }
+
+.imageButton {
+    background-color: #222;
+    color: white;
+    border: 1px solid #444;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
