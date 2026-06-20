@@ -1,128 +1,25 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
-    <meta charset="UTF-8">
-    <title>んだっす dev0.2.0</title>
-
-    <link rel="icon" href="TBD.png">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>移転のお知らせ</title>
 </head>
-
 <body>
+<h1>サイト移転のお知らせ</h1>
 
-<div id="container">
+<p>
+このサイトは移転しました。
+</p>
 
-    <!-- 左メニュー -->
-    <div id="leftMenu">
-        <button onclick="showPage('homePage')">ホーム</button>
-        <button onclick="showPage('searchPage')">検索</button>
-        <button onclick="showPage('notificationPage')">通知</button>
-        <button onclick="showPage('profilePage')">プロフィール</button>
-        <button onclick="showPage('settingsPage')">設定</button>
-    </div>
+<p>
+新しいサイトはこちら↓
+</p>
 
-    <!-- メイン -->
-    <div id="main">
-
-        <!-- ホーム -->
-        <div id="homePage" class="page">
-
-            <h2>ホーム</h2>
-
-            <!-- 投稿入力 -->
-            <textarea id="postInput" placeholder="Put your texts here..."></textarea>
-
-            <!-- 画像アップロード（非表示） -->
-            <input type="file" id="imageInput" accept="image/*" style="display:none;">
-
-            <!-- 写真ボタン -->
-            <button id="imageButton" class="imageButton">📷 写真</button>
-
-            <!-- 投稿ボタン（新デザイン） -->
-            <button class="postButton" onclick="addPost()">投稿</button>
-
-            <!-- 投稿一覧 -->
-            <div id="posts"></div>
-
-        </div>
-
-        <!-- 他ページ -->
-        <div id="searchPage" class="page" style="display:none;">
-            <h2>検索</h2>
-        </div>
-
-        <div id="notificationPage" class="page" style="display:none;">
-            <h2>通知</h2>
-        </div>
-
-        <div id="profilePage" class="page" style="display:none;">
-            <h2>プロフィール</h2>
-        </div>
-
-        <div id="settingsPage" class="page" style="display:none;">
-            <h2>設定</h2>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- Firebase 初期化 -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
-import {
-    getFirestore,
-    collection,
-    addDoc,
-    query,
-    orderBy,
-    onSnapshot,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-import {
-    getStorage,
-    ref,
-    uploadBytes,
-    getDownloadURL
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-storage.js";
-
-const firebaseConfig = {
-    apiKey: "AIzaSyBrvljWUiy1qW1FpGi37Md0j7c73ZVvPfE",
-    authDomain: "akitaben-socialmedia.firebaseapp.com",
-    projectId: "akitaben-socialmedia",
-    storageBucket: "akitaben-socialmedia.appspot.com",
-    messagingSenderId: "1042795276573",
-    appId: "1:1042795276573:web:e9f4c18963fd5adfd099f4",
-    measurementId: "G-S0HJBMED77"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
-
-window.db = db;
-window.storage = storage;
-
-window.firestoreFunctions = {
-    collection,
-    addDoc,
-    query,
-    orderBy,
-    onSnapshot,
-    serverTimestamp
-};
-
-window.storageFunctions = {
-    ref,
-    uploadBytes,
-    getDownloadURL
-};
-</script>
-
-<!-- script.js を Firebase 初期化の後に読み込む -->
-<script type="module" src="script.js"></script>
+<p>
+<a href="https://ユーザー名.github.io/新しいリポジトリ名/">
+https://ユーザー名.github.io/新しいリポジトリ名/
+</a>
+</p>
 
 </body>
 </html>
