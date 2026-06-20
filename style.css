@@ -27,6 +27,7 @@ body {
     border-radius: 6px;
     cursor: pointer;
 }
+background: linear-gradient(135deg, #ff0000, #990000);
 
 #main {
     flex: 1;
